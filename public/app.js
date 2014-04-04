@@ -7,7 +7,8 @@ angular.module('chat', [
   $locationProvider.html5Mode(true).hashPrefix('!');
   $routeProvider
     .when('/', {
-      controller:'MainCtrl'
+      controller:'MainCtrl',
+      templateUrl:'/templates/main.html'
     })
     .when('/chat', {
       controller:'ChatCtrl',
