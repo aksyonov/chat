@@ -1,0 +1,6 @@
+.idea/
+Thumbs.db
+public/all.*
+node_modules/
+public/vendor/
+!public/vendor/socket.io.js
