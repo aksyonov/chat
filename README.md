@@ -1,7 +1,7 @@
 chat
 ====
 
-My chat made with node.js, socket.io and AngularJS.
+My chat made with node.js, MongoDB, socket.io and AngularJS.
 
 Run the project
 ---------------

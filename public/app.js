@@ -1,15 +1,16 @@
-angular.module('chat', [
+angular.module('chatApp', [
         'ngRoute',
         'ngAnimate',
-        'btford.socket-io'
+        'btford.socket-io',
+        'chatApp.chat'
     ])
 
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
         $routeProvider
-            .when('/chat', {
+            .when('/', {
                 controller: 'ChatCtrl',
-                templateUrl: '/templates/chat.html'
+                templateUrl: '/chat/chat.html'
             })
             .when('/login', {
                 controller: 'LoginCtrl',
@@ -31,13 +32,12 @@ angular.module('chat', [
     })
 
     .run(function (socket, $location, $rootScope) {
-        console.log('run');
         socket.on('login:unauthorized', function () {
             socket.s.disconnect();
             $location.path("/login");
         });
         socket.on('login:success', function (user) {
-            $location.path("/chat");
+            $location.path("/");
             $rootScope.loggedIn = true;
         });
     })
@@ -64,16 +64,3 @@ angular.module('chat', [
             $rootScope.loggedIn = false;
         });
     })
-
-    .controller('ChatCtrl', function ($scope, socket) {
-        console.log('ctrl');
-        $scope.messages = [];
-        socket.forward('chat', $scope);
-        $scope.$on('socket:chat', function (e, data) {
-            $scope.messages.push(data);
-        });
-        $scope.send = function () {
-            socket.emit('chat', $scope.message);
-            $scope.message = '';
-        };
-    });
