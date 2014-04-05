@@ -1,6 +1,15 @@
 #chat {
   height: calc(~"100% - 50px");
-  overflow-y: scroll;
+  overflow: hidden;
+
+  .row {
+    height: 100%;
+  }
+
+  [scroll-glue] {
+    height: 100%;
+    overflow-y: scroll;
+  }
 
   ul {
     margin-bottom: 0;
