@@ -3,15 +3,17 @@
 <head>
     <title>chat</title>
     <meta charset="utf-8" />
+    <!-- build:twbsCss -->
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css">
-    <!-- build:css all.min.css -->
+    <!-- endbuild -->
+    <!-- build:css -->
     <link rel="stylesheet" href="/all.css">
-    <!-- /build -->
+    <!-- endbuild -->
 </head>
 <body>
-    <ng-include src="'/templates/nav.html'"></ng-include>
+    <ng-include src="'templates/nav.html'"></ng-include>
     <ng-view></ng-view>
-    <!-- build:js all.min.js -->
+    <!-- build:js -->
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
     <script src="vendor/angular-animate/angular-animate.js"></script>
@@ -20,6 +22,6 @@
     <script src="vendor/angularjs-scroll-glue/src/scrollglue.js"></script>
     <script src="chat/chat.js"></script>
     <script src="app.js"></script>
-    <!-- /build -->
+    <!-- endbuild -->
 </body>
 </html>

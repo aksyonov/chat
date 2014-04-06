@@ -10,11 +10,11 @@ angular.module('chatApp', [
         $routeProvider
             .when('/', {
                 controller: 'ChatCtrl',
-                templateUrl: '/chat/chat.html'
+                templateUrl: 'chat/chat.html'
             })
             .when('/login', {
                 controller: 'LoginCtrl',
-                templateUrl: '/templates/login.html'
+                templateUrl: 'templates/login.html'
             })
             .when('/logout', {
                 controller: 'LogoutCtrl',
