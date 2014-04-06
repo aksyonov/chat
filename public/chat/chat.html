@@ -3,9 +3,9 @@
         <div class="col-xs-9" scroll-glue>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="msg in messages">
-                    <span class="label label-default">{{ msg.date | date:'HH:mm' }}</span>
+                    <span class="label label-default">{{ msg.date }}</span>
                     <span class="label label-info">{{ msg.user }}</span>
-                    <span>{{ msg.message }}</span>
+                    <span ng-bind-html="msg.text | unsafe"></span>
                 </li>
             </ul>
         </div>
@@ -25,7 +25,7 @@
 <div class="container" ng-show="loggedIn" id="chat-form">
     <form ng-submit="send()">
         <div class="input-group">
-            <input type="text" class="form-control" ng-model="message">
+            <input type="text" class="form-control" ng-model="message" em-typeahead>
             <span class="input-group-btn">
                 <button class="btn btn-primary" type="submit">Send</button>
             </span>

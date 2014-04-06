@@ -44,6 +44,8 @@ gulp.task('html', function () {
 gulp.task('copy', function () {
     gulp.src('./public/vendor/bootstrap/dist/**/*')
         .pipe(gulp.dest('build/vendor/bootstrap/dist'));
+    gulp.src('./public/emoji/emoji.png')
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('default', ['scripts', 'styles', 'html', 'copy']);

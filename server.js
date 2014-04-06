@@ -24,7 +24,7 @@ app.configure(function () {
 app.configure('development', function () {
     publicDir = join(__dirname, "public");
     app.use(lessMiddleware({
-        src: publicDir + '/styles',
+        src: publicDir,
         dest: publicDir,
         sourceMap: true
     }));
