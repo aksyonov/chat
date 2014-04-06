@@ -1,5 +1,6 @@
 .idea/
 Thumbs.db
-public/all.*
 node_modules/
 public/vendor/
+build/
+public/all.css

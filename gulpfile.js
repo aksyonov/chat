@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var rename = require("gulp-rename");
-var exclude = require('gulp-ignore').exclude;
 
 var ngmin = require('gulp-ngmin');
 
@@ -11,9 +10,7 @@ gulp.task('scripts', function () {
         .pipe(gulpif(/^(?:(?!vendor).)*$/, ngmin()))
         .pipe(gulpif(/socket\.js$/, ngmin()));
 
-    var tplStream = gulp.src('public/**/*.html')
-        .pipe(exclude(/vendor/))
-        .pipe(exclude(/(index|all)\.html/))
+    var tplStream = gulp.src(['public/**/*.html', '!public/vendor/**/*', '!public/index.html'])
         .pipe(require('gulp-angular-templatecache')({
             module: 'chatApp'
         }));
@@ -21,7 +18,7 @@ gulp.task('scripts', function () {
     require('event-stream').merge(jsStream, tplStream)
         .pipe(require('gulp-concat')('all.min.js'))
         .pipe(require('gulp-uglify')())
-        .pipe(gulp.dest('public'));
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('styles', function () {
@@ -31,7 +28,7 @@ gulp.task('styles', function () {
         }))
         .pipe(require('gulp-csso')())
         .pipe(rename('all.min.css'))
-        .pipe(gulp.dest('public'));
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('html', function () {
@@ -41,8 +38,12 @@ gulp.task('html', function () {
             'twbsCss': 'vendor/bootstrap/dist/css/bootstrap.min.css',
             'js': 'all.min.js'
         }))
-        .pipe(rename('all.html'))
-        .pipe(gulp.dest('public'));
+        .pipe(gulp.dest('build'));
 });
 
-gulp.task('default', ['scripts', 'styles', 'html']);
+gulp.task('copy', function () {
+    gulp.src('./public/vendor/bootstrap/dist/**/*')
+        .pipe(gulp.dest('build/vendor/bootstrap/dist'));
+});
+
+gulp.task('default', ['scripts', 'styles', 'html', 'copy']);

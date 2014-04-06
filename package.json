@@ -31,7 +31,6 @@
         "gulp-rename": "~1.2.0",
         "gulp-csso": "~0.2.7",
         "gulp-angular-templatecache": "~1.1.1",
-        "gulp-ignore": "~1.0.0",
         "gulp-html-replace": "~1.0.0"
     }
 }
