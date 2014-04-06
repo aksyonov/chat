@@ -1,3 +1,4 @@
+var fs = require('fs');
 var express = require('express');
 var http = require('http');
 var connect = require('express/node_modules/connect');
@@ -49,6 +50,12 @@ app.get('*', function (req, res) {
     res.sendfile(join(publicDir, 'index.html'));
 });
 
-server.listen(8000, function () {
-    console.log('Server listening on port ' + 8000);
+var port = process.env.PORT || 8000;
+var oldUmask = process.umask(0);
+if (fs.existsSync(port)) {
+    fs.unlinkSync(port);
+}
+server.listen(port, function () {
+    console.log('Server listening on port ' + port);
+    process.umask(oldUmask);
 });
