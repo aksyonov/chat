@@ -1,5 +1,6 @@
 angular.module('chatApp.chat', [
         'luegg.directives',
+        'chatApp.emoji.popover',
         'chatApp.emoji.typeahead',
         'chatApp.emoji'
     ])

@@ -162,9 +162,21 @@ angular.module('chatApp.emoji', [])
             "large_blue_circle", "large_blue_diamond", "large_orange_diamond",
             "small_blue_diamond", "small_orange_diamond", "small_red_triangle",
             "small_red_triangle_down", "shipit"
+        ],
+        popover: [
+            "hearts", "joy", "unamused", "heart_eyes", "relaxed", "ok_hand",
+            "heart", "kissing_heart", "blush", "pensive", "weary", "smirk",
+            "sob", "grin", "two_hearts", "flushed", "+1", "raised_hands",
+            "wink", "information_desk_person", "relieved", "see_no_evil",
+            "sunglasses", "v", "expressionless", "pray", "yum",
+            "stuck_out_tongue_winking_eye", "disappointed", "notes", "hand",
+            "eyes", "smile", "sleeping", "speak_no_evil", "clap", "confused",
+            "rage", "neutral_face", "cry", "100", "tired_face", "scream",
+            "broken_heart", "kiss", "purple_heart",
+            "stuck_out_tongue_closed_eyes", "sleepy"
         ]
     })
-    .filter("emoji", function(emojis) {
+    .filter("emoji", function (emojis) {
         var rEmojis = new RegExp(":(" + emojis.list.join("|") + "):", "g");
         return function (input) {
             return input.replace(rEmojis, function (match, text) {
