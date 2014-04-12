@@ -2,7 +2,8 @@ angular.module('chatApp.chat', [
         'luegg.directives',
         'chatApp.emoji.popover',
         'chatApp.emoji.typeahead',
-        'chatApp.emoji'
+        'chatApp.emoji',
+        'chatApp.chat.createRoomModal'
     ])
     .controller('ChatCtrl', function ($scope, socket, $filter) {
         $scope.rooms = [
