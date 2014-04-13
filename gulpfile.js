@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var rename = require("gulp-rename");
-
+var es = require('event-stream');
 var ngmin = require('gulp-ngmin');
 
 gulp.task('scripts', function () {
@@ -15,14 +15,14 @@ gulp.task('scripts', function () {
             module: 'chatApp'
         }));
 
-    require('event-stream').merge(jsStream, tplStream)
+    return es.merge(jsStream, tplStream)
         .pipe(require('gulp-concat')('all.min.js'))
         .pipe(require('gulp-uglify')())
         .pipe(gulp.dest('build'));
 });
 
 gulp.task('styles', function () {
-    gulp.src('./public/main.less')
+    return gulp.src('./public/main.less')
         .pipe(require('gulp-less')({
             paths: ['./public']
         }))
@@ -32,7 +32,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('html', function () {
-    gulp.src('./public/index.html')
+    return gulp.src('./public/index.html')
         .pipe(require('gulp-html-replace')({
             'css': 'all.min.css',
             'twbsCss': 'vendor/bootstrap/dist/css/bootstrap.min.css',
@@ -42,10 +42,12 @@ gulp.task('html', function () {
 });
 
 gulp.task('copy', function () {
-    gulp.src('./public/vendor/bootstrap/dist/**/*')
-        .pipe(gulp.dest('build/vendor/bootstrap/dist'));
-    gulp.src('./public/emoji/emoji.{png,css}')
-        .pipe(gulp.dest('build/emoji'));
+    return es.merge(
+        gulp.src('./public/vendor/bootstrap/dist/**/*')
+            .pipe(gulp.dest('build/vendor/bootstrap/dist')),
+        gulp.src('./public/emoji/emoji.{png,css}')
+            .pipe(gulp.dest('build/emoji'))
+    );
 });
 
 gulp.task('default', ['scripts', 'styles', 'html', 'copy']);

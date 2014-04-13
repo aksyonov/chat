@@ -6,24 +6,11 @@ angular.module('chatApp.chat', [
         'chatApp.chat.createRoomModal'
     ])
     .controller('ChatCtrl', function ($scope, socket, $filter) {
-        $scope.rooms = [
-            {
-                name: 'General'
-            },
-            {
-                name: 'JavaScript'
-            },
-            {
-                name: 'PHP'
-            },
-            {
-                name: 'Fun'
-            }
-        ];
+        $scope.rooms = {};
         $scope.messages = [];
         $scope.message = '';
         $scope.currentRoom = 0;
-        socket.forward(['chat', 'room:online'], $scope);
+        socket.forward(['chat', 'room:online', 'room:current', 'rooms'], $scope);
 
         $scope.send = function () {
             socket.emit('chat', $scope.message);
@@ -35,14 +22,26 @@ angular.module('chatApp.chat', [
             $scope.messages = [];
         };
 
+        $scope.$on('socket:rooms', function (e, data) {
+            $scope.rooms = data;
+        });
         $scope.$on('socket:chat', function (e, data) {
             data.text = $filter('emoji')(data.text);
             data.date = $filter('date')(data.date, 'HH:mm');
             $scope.messages.push(data);
         });
         $scope.$on('socket:room:online', function (e, data) {
-            $scope.rooms[data.room].online = data.value;
+            if (data.value == 0) {
+                delete $scope.rooms[data.room];
+            } else {
+                $scope.rooms[data.room] = data.value;
+            }
         });
+        $scope.$on('socket:room:current', function (e, room) {
+            $scope.currentRoom = room;
+        });
+
+        socket.emit('start');
     })
     .filter('unsafe', function ($sce) {
         return function (val) {

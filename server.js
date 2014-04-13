@@ -1,28 +1,29 @@
 var fs = require('fs');
-var express = require('express');
 var http = require('http');
-var connect = require('express/node_modules/connect');
-var lessMiddleware = require('less-middleware');
-var MongoStore = require('connect-mongo')(express);
 var join = require("path").join;
+
+var express = require('express');
+var lessMiddleware = require('less-middleware');
+var session = require('express-session');
+
 var db = require('./lib/db').db;
 
 var app = express();
-var cookieParser = express.cookieParser('secret');
+var cookieParser = require('cookie-parser')('secret');
+var MongoStore = require('connect-mongo')({session: session});
 var sessionStore = new MongoStore({
     db: db
 });
 
 var publicDir;
+var env = process.env.NODE_ENV || 'development';
 
-app.configure(function () {
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(cookieParser);
-    app.use(express.session({ store: sessionStore }));
-});
+app.use(require('body-parser')());
+app.use(require('method-override')());
+app.use(cookieParser);
+app.use(session({ store: sessionStore }));
 
-app.configure('development', function () {
+if ('development' == env) {
     publicDir = join(__dirname, "public");
     app.use(lessMiddleware({
         src: publicDir,
@@ -32,12 +33,12 @@ app.configure('development', function () {
     app.use(express.static(publicDir));
     // for less source maps
     app.use('/' + publicDir.replace(/\\/g, '/'), express.static(publicDir));
-});
+}
 
-app.configure('production', function () {
+if ('production' == env) {
     publicDir = join(__dirname, "build");
     app.use(express.static(publicDir, { maxAge: 86400000 }));
-});
+}
 
 var server = http.createServer(app);
 

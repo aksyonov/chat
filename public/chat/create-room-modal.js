@@ -2,7 +2,7 @@ angular.module('chatApp.chat.createRoomModal', [
         'mgcrea.ngStrap.modal',
         'mgcrea.ngStrap.alert'
     ])
-    .directive('chatRoomModal', function ($window, $sce, $modal, $alert) {
+    .directive('chatRoomModal', function ($window, $sce, $modal, $alert, socket) {
         var defaults = {
             animation: 'am-fade-and-slide-top',
             backdropAnimation: 'am-fade',
@@ -44,11 +44,14 @@ angular.module('chatApp.chat.createRoomModal', [
                 scope.create = function () {
                     alert && alert.destroy();
                     alert = undefined;
-                    if (!scope.newRoom.name.trim()) {
+                    socket.emit('room:create', scope.newRoom.name, function(res) {
+                        if ('ok' == res) {
+                            return modal.hide();
+                        }
                         alert = $alert(angular.extend({}, alertOpts, {
-                            content: $sce.trustAsHtml('Name must not be empty!')
+                            content: $sce.trustAsHtml(res)
                         }));
-                    }
+                    });
                 };
 
                 // Garbage collection
