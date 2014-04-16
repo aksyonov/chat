@@ -17,7 +17,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li ng-repeat="(name, online) in rooms"
                     ng-class="{active: name==currentRoom}">
-                    <a href="#" ng-click="changeRoom(name)">
+                    <a href="#" ng-click="name!=currentRoom && changeRoom(name)">
                         <span>{{ name }}</span>
                         <span class="badge pull-right">{{ online }}</span>
                     </a>
