@@ -15,11 +15,11 @@
                         chat-room-modal>Create...</button>
             </h4>
             <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="(name, online) in rooms"
-                    ng-class="{active: name==currentRoom}">
-                    <a href="#" ng-click="name!=currentRoom && changeRoom(name)">
-                        <span>{{ name }}</span>
-                        <span class="badge pull-right">{{ online }}</span>
+                <li ng-repeat="room in rooms"
+                    ng-class="{active: room.name==currentRoom}">
+                    <a href="#" ng-click="room.name!=currentRoom && changeRoom(room.name)">
+                        <span>{{ room.name }}</span>
+                        <span class="badge pull-right">{{ room.online }}</span>
                     </a>
                 </li>
             </ul>

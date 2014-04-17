@@ -6,11 +6,10 @@ angular.module('chatApp.chat', [
         'chatApp.chat.createRoomModal'
     ])
     .controller('ChatCtrl', function ($scope, socket, $filter) {
-        $scope.rooms = {};
+        var rooms = $scope.rooms = [];
         $scope.messages = [];
         $scope.message = '';
         $scope.currentRoom = 0;
-        socket.forward(['chat', 'room:online', 'room:current', 'rooms'], $scope);
 
         $scope.send = function () {
             socket.emit('chat', $scope.message);
@@ -22,21 +21,47 @@ angular.module('chatApp.chat', [
             $scope.messages = [];
         };
 
-        $scope.$on('socket:rooms', function (e, data) {
-            $scope.rooms = data;
-        });
+        rooms.find = function (name) {
+            return this.filter(function(room) {
+                return room.name === name;
+            })[0];
+        };
+
+        socket.forward([
+            'chat',
+            'rooms:new',
+            'rooms:list',
+            'rooms:remove',
+            'room:online',
+            'room:current'
+        ], $scope);
+
         $scope.$on('socket:chat', function (e, data) {
             data.text = $filter('emoji')(data.text);
             data.date = $filter('date')(data.date, 'HH:mm');
             $scope.messages.push(data);
         });
-        $scope.$on('socket:room:online', function (e, data) {
-            if (data.value == 0) {
-                delete $scope.rooms[data.room];
-            } else {
-                $scope.rooms[data.room] = data.value;
+
+        $scope.$on('socket:rooms:new', function (e, data) {
+            rooms.push(data);
+        });
+
+        $scope.$on('socket:rooms:list', function (e, data) {
+            rooms.splice.apply(rooms, [0,0].concat(data));
+        });
+
+        $scope.$on('socket:rooms:remove', function (e, name) {
+            var room = rooms.find(name);
+            if (room) {
+                rooms.splice(rooms.indexOf(room), 1);
             }
         });
+
+        $scope.$on('socket:room:online', function (e, data) {
+            var room = rooms.find(data.name);
+            room.online = data.value;
+        });
+
         $scope.$on('socket:room:current', function (e, room) {
             $scope.currentRoom = room;
         });
