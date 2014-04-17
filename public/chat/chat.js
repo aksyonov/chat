@@ -20,7 +20,10 @@ angular.module('chatApp.chat', [
             if (newRoom.pass && !pass) {
                 pass = prompt('Enter password for room ' + id);
             }
-            socket.emit('room:change', id, pass, function (result) {
+            socket.emit('room:change', {
+                name: id,
+                pass: pass
+            }, function (result) {
                 if (typeof result == 'string') {
                     alert(result);
                     return;
