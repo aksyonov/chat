@@ -15,14 +15,22 @@ angular.module('chatApp.chat', [
             socket.emit('chat', $scope.message);
             $scope.message = '';
         };
-        $scope.changeRoom = function (id) {
-            $scope.currentRoom = id;
-            socket.emit('room:change', id, function (messages) {
-                messages.forEach(function (data) {
+        $scope.changeRoom = function (id, pass) {
+            var newRoom = rooms.find(id);
+            if (newRoom.pass && !pass) {
+                pass = prompt('Enter password for room ' + id);
+            }
+            socket.emit('room:change', id, pass, function (result) {
+                if (typeof result == 'string') {
+                    alert(result);
+                    return;
+                }
+                $scope.currentRoom = id;
+                result.forEach(function (data) {
                     data.text = $filter('emoji')(data.text);
                     data.date = $filter('date')(data.date, 'HH:mm');
                 });
-                $scope.messages = messages;
+                $scope.messages = result;
             });
         };
 

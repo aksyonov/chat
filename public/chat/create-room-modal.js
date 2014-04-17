@@ -44,9 +44,9 @@ angular.module('chatApp.chat.createRoomModal', [
                 scope.create = function () {
                     alert && alert.destroy();
                     alert = undefined;
-                    socket.emit('room:create', scope.newRoom.name, function(res) {
+                    socket.emit('room:create', scope.newRoom, function(res) {
                         if ('ok' == res) {
-                            scope.changeRoom(scope.newRoom.name);
+                            scope.changeRoom(scope.newRoom.name, scope.newRoom.pass);
                             return modal.hide();
                         }
                         alert = $alert(angular.extend({}, alertOpts, {

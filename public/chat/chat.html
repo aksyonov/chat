@@ -20,6 +20,9 @@
                     <a href="#" ng-click="room.name!=currentRoom && changeRoom(room.name)">
                         <span>{{ room.name }}</span>
                         <span class="badge pull-right">{{ room.online }}</span>
+                        <span class="badge pull-right" ng-if="room.pass">
+                            <span class="glyphicon glyphicon-lock"></span>
+                        </span>
                     </a>
                 </li>
             </ul>
