@@ -8,7 +8,7 @@ From client
 
 `chat(message)` Send message to all users in current room.
 
-`room:change(name)` Change current room.
+`room:change(name, cb)` Change current room. Messages in the room pass with callback.
 
 `room:create(name, cb)` Create new room.
 
@@ -17,7 +17,7 @@ From server
 
 `chat({user, text, date})` Send message to all users in current room.
 
-`room:current(name)` Send current room name on start.
+`room:current([name, messages])` Send current room name on start.
 
 `room:online({name, value})` Online counter.
 

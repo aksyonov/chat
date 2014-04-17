@@ -17,8 +17,13 @@ angular.module('chatApp.chat', [
         };
         $scope.changeRoom = function (id) {
             $scope.currentRoom = id;
-            socket.emit('room:change', id);
-            $scope.messages = [];
+            socket.emit('room:change', id, function (messages) {
+                messages.forEach(function (data) {
+                    data.text = $filter('emoji')(data.text);
+                    data.date = $filter('date')(data.date, 'HH:mm');
+                });
+                $scope.messages = messages;
+            });
         };
 
         rooms.find = function (name) {
@@ -62,8 +67,15 @@ angular.module('chatApp.chat', [
             room.online = data.value;
         });
 
-        $scope.$on('socket:room:current', function (e, room) {
+        $scope.$on('socket:room:current', function (e, data) {
+            var room = data[0],
+                messages = data[1];
             $scope.currentRoom = room;
+            messages.forEach(function (data) {
+                data.text = $filter('emoji')(data.text);
+                data.date = $filter('date')(data.date, 'HH:mm');
+            });
+            $scope.messages = messages;
         });
 
         socket.emit('start');
