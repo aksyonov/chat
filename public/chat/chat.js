@@ -1,9 +1,8 @@
 angular.module('chatApp.chat', [
         'luegg.directives',
-        'chatApp.emoji.popover',
-        'chatApp.emoji.typeahead',
         'chatApp.emoji',
-        'chatApp.chat.createRoomModal'
+        'chatApp.chat.createRoomModal',
+        'chatApp.chat.input'
     ])
     .controller('ChatCtrl', function ($scope, socket, $filter) {
         var rooms = $scope.rooms = [];
@@ -94,5 +93,13 @@ angular.module('chatApp.chat', [
     .filter('unsafe', function ($sce) {
         return function (val) {
             return $sce.trustAsHtml(val);
+        };
+    }).directive('focusOn', function() {
+        return function(scope, elem, attr) {
+            scope.$on('focusOn', function(e, name) {
+                if(name === attr.focusOn) {
+                    elem[0].focus();
+                }
+            });
         };
     });
