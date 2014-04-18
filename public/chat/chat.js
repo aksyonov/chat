@@ -85,6 +85,20 @@ angular.module('chatApp.chat', [
 
         socket.emit('start');
     })
+    .directive('chatMessages', function() {
+        return {
+            replace: true,
+            restrict: 'E',
+            templateUrl: 'chat/chat-messages.html'
+        };
+    })
+    .directive('chatRooms', function() {
+        return {
+            replace: true,
+            restrict: 'E',
+            templateUrl: 'chat/chat-rooms.html'
+        };
+    })
     .filter('unsafe', function ($sce) {
         return function (val) {
             return $sce.trustAsHtml(val);
