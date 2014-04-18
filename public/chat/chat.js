@@ -7,13 +7,8 @@ angular.module('chatApp.chat', [
     .controller('ChatCtrl', function ($scope, socket, $filter) {
         var rooms = $scope.rooms = [];
         $scope.messages = [];
-        $scope.message = '';
         $scope.currentRoom = 0;
 
-        $scope.send = function () {
-            socket.emit('chat', $scope.message);
-            $scope.message = '';
-        };
         $scope.changeRoom = function (id, pass) {
             var newRoom = rooms.find(id);
             if (newRoom.pass && !pass) {
@@ -93,13 +88,5 @@ angular.module('chatApp.chat', [
     .filter('unsafe', function ($sce) {
         return function (val) {
             return $sce.trustAsHtml(val);
-        };
-    }).directive('focusOn', function() {
-        return function(scope, elem, attr) {
-            scope.$on('focusOn', function(e, name) {
-                if(name === attr.focusOn) {
-                    elem[0].focus();
-                }
-            });
         };
     });

@@ -1,0 +1,14 @@
+<div class="container" ng-show="loggedIn" id="chat-form">
+    <form ng-submit="send()">
+        <div class="input-group">
+            <input type="text" class="form-control"
+                   focus-on="msg-input"
+                   ng-model="message" em-typeahead>
+            <span class="input-group-btn">
+                <button class="btn btn-default btn-smile" type="button"
+                        ng-model="message" em-popover></button>
+                <button class="btn btn-primary" type="submit">Send</button>
+            </span>
+        </div>
+    </form>
+</div>

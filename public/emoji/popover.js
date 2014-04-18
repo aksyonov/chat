@@ -40,7 +40,7 @@ angular.module('chatApp.emoji.popover', ['mgcrea.ngStrap.tooltip'])
 
   })
 
-  .directive('emPopover', function($window, $timeout, $sce, $rootScope, $emPopover, emojis) {
+  .directive('emPopover', function($window, $timeout, $sce, $emPopover, emojis) {
 
     var requestAnimationFrame = $window.requestAnimationFrame || $window.setTimeout;
 
@@ -83,7 +83,7 @@ angular.module('chatApp.emoji.popover', ['mgcrea.ngStrap.tooltip'])
         scope.apply = function (emoji) {
           var text = ngModel.$viewValue;
           ngModel.$setViewValue(text + ':' + emoji + ':');
-          $rootScope.$broadcast('focusOn', 'msg-input');
+          scope.$parent.$broadcast('focusOn', 'msg-input');
           $timeout(function () {
               popover.hide();
           });
