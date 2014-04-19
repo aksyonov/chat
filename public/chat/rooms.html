@@ -4,12 +4,12 @@
                 chat-room-modal>Create...</button>
     </h4>
     <ul class="nav nav-pills nav-stacked">
-        <li ng-repeat="room in rooms"
+        <li ng-repeat="room in rooms" bindonce
             ng-class="{active: room.name==currentRoom}">
             <a href="#" ng-click="room.name!=currentRoom && changeRoom(room.name)">
-                <span>{{ room.name }}</span>
+                <span bo-bind="room.name"></span>
                 <span class="badge pull-right">{{ room.online }}</span>
-                <span class="badge pull-right" ng-if="room.pass">
+                <span class="badge pull-right" bo-if="room.pass">
                     <span class="glyphicon glyphicon-lock"></span>
                 </span>
             </a>

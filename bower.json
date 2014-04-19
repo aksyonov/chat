@@ -13,6 +13,7 @@
     "socket.io-client": "~0.9.16",
     "angularjs-scroll-glue": "~0.0.1",
     "angular-strap": "~2.0.0",
-    "angular-motion": "~0.3.2"
+    "angular-motion": "~0.3.2",
+    "angular-bindonce": "~0.3.1"
   }
 }

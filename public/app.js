@@ -1,6 +1,7 @@
 angular.module('chatApp', [
         'ngRoute',
         'ngAnimate',
+        'pasvaz.bindonce',
         'btford.socket-io',
         'chatApp.chat'
     ])

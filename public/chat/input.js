@@ -2,10 +2,11 @@ angular.module('chatApp.chat.input', [
         'chatApp.emoji.popover',
         'chatApp.emoji.typeahead'
     ])
+
     .directive('chatInput', function(socket) {
         return {
             restrict: 'E',
-            templateUrl: 'chat/chat-input.html',
+            templateUrl: 'chat/input.html',
             replace: true,
             link: function (scope, element, attr) {
                 scope.message = '';
@@ -16,6 +17,7 @@ angular.module('chatApp.chat.input', [
             }
         };
     })
+
     .directive('focusOn', function() {
         return function(scope, elem, attr) {
             scope.$on('focusOn', function(e, name) {

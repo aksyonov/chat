@@ -1,8 +1,8 @@
 <div class="popover">
     <div class="arrow"></div>
     <div class="popover-content popover-emoji">
-        <i class="emoji" ng-repeat="emoji in emojis"
-           ng-class="'emoji_'+emoji" ng-attr-title=":{{emoji}}:"
+        <i class="emoji" ng-repeat="emoji in emojis" bindonce
+           bo-class="'emoji_'+emoji" bo-title="':'+emoji+':'"
            ng-click="apply(emoji)"></i>
     </div>
 </div>

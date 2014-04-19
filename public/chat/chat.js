@@ -4,7 +4,8 @@ angular.module('chatApp.chat', [
         'chatApp.chat.createRoomModal',
         'chatApp.chat.input'
     ])
-    .controller('ChatCtrl', function ($scope, socket, $filter) {
+
+    .controller('ChatCtrl', function ($scope, socket) {
         var rooms = $scope.rooms = [];
         $scope.messages = [];
         $scope.currentRoom = 0;
@@ -23,10 +24,6 @@ angular.module('chatApp.chat', [
                     return;
                 }
                 $scope.currentRoom = id;
-                result.forEach(function (data) {
-                    data.text = $filter('emoji')(data.text);
-                    data.date = $filter('date')(data.date, 'HH:mm');
-                });
                 $scope.messages = result;
             });
         };
@@ -47,8 +44,6 @@ angular.module('chatApp.chat', [
         ], $scope);
 
         $scope.$on('socket:chat', function (e, data) {
-            data.text = $filter('emoji')(data.text);
-            data.date = $filter('date')(data.date, 'HH:mm');
             $scope.messages.push(data);
         });
 
@@ -76,31 +71,24 @@ angular.module('chatApp.chat', [
             var room = data[0],
                 messages = data[1];
             $scope.currentRoom = room;
-            messages.forEach(function (data) {
-                data.text = $filter('emoji')(data.text);
-                data.date = $filter('date')(data.date, 'HH:mm');
-            });
             $scope.messages = messages;
         });
 
         socket.emit('start');
     })
+
     .directive('chatMessages', function() {
         return {
             replace: true,
             restrict: 'E',
-            templateUrl: 'chat/chat-messages.html'
+            templateUrl: 'chat/messages.html'
         };
     })
+
     .directive('chatRooms', function() {
         return {
             replace: true,
             restrict: 'E',
-            templateUrl: 'chat/chat-rooms.html'
-        };
-    })
-    .filter('unsafe', function ($sce) {
-        return function (val) {
-            return $sce.trustAsHtml(val);
+            templateUrl: 'chat/rooms.html'
         };
     });
