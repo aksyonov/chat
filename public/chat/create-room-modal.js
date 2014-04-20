@@ -44,7 +44,7 @@ angular.module('chatApp.chat.createRoomModal', [
                 scope.create = function () {
                     alert && alert.destroy();
                     alert = undefined;
-                    socket.emit('room:create', scope.newRoom, function(res) {
+                    socket.ngEmit('room:create', scope.newRoom, function(res) {
                         if ('ok' == res) {
                             scope.changeRoom(scope.newRoom.name, scope.newRoom.pass);
                             return modal.hide();
@@ -52,7 +52,7 @@ angular.module('chatApp.chat.createRoomModal', [
                         alert = $alert(angular.extend({}, alertOpts, {
                             content: $sce.trustAsHtml(res)
                         }));
-                    });
+                    }, scope);
                 };
 
                 // Garbage collection

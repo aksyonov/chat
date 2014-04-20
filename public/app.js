@@ -2,7 +2,7 @@ angular.module('chatApp', [
         'ngRoute',
         'ngAnimate',
         'pasvaz.bindonce',
-        'btford.socket-io',
+        'chatApp.socket',
         'chatApp.chat'
     ])
 
@@ -23,23 +23,15 @@ angular.module('chatApp', [
             });
     })
 
-    .factory('socket', function (socketFactory) {
-        var socket = io.connect();
-        var factory = socketFactory({
-            ioSocket: socket
-        });
-        factory.s = socket;
-        return factory;
-    })
-
-    .run(function (socket, $location, $rootScope) {
-        socket.on('login:unauthorized', function () {
-            socket.s.disconnect();
+    .run(function ($location, $rootScope, socket, chat) {
+        socket.ngOn('login:unauthorized', function () {
             $location.path("/login");
+            socket.disconnect();
         });
-        socket.on('login:success', function (user) {
+        socket.ngOn('login:success', function (user) {
             $location.path("/");
             $rootScope.loggedIn = true;
+            chat.start();
         });
     })
 
@@ -50,7 +42,7 @@ angular.module('chatApp', [
                 password: $scope.pass
             }).then(function (res) {
                 if (res.data === 'ok') {
-                    socket.s.socket.connect();
+                    socket.socket.connect();
                 } else {
                     $scope.err = res.data;
                 }
@@ -60,7 +52,7 @@ angular.module('chatApp', [
 
     .controller('LogoutCtrl', function ($http, $location, $rootScope, socket) {
         $http.post('/logout').then(function (res) {
-            socket.s.disconnect();
+            socket.disconnect();
             $location.path("/login");
             $rootScope.loggedIn = false;
         });

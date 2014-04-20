@@ -7,8 +7,7 @@ var ngmin = require('gulp-ngmin');
 gulp.task('scripts', function () {
     var jsStream = gulp.src("./public/index.html")
         .pipe(require("gulp-assets").js())
-        .pipe(gulpif(/^(?:(?!vendor).)*$/, ngmin()))
-        .pipe(gulpif(/socket\.js$/, ngmin()));
+        .pipe(gulpif(/^(?:(?!vendor).)*$/, ngmin()));
 
     var tplStream = gulp.src(['public/**/*.html', '!public/vendor/**/*', '!public/index.html'])
         .pipe(require('gulp-angular-templatecache')({
