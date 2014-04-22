@@ -6,13 +6,13 @@ var express = require('express');
 var lessMiddleware = require('less-middleware');
 var session = require('express-session');
 
-var db = require('./lib/db').db;
+var db = require('./lib/db');
 
 var app = express();
 var cookieParser = require('cookie-parser')('secret');
 var MongoStore = require('connect-mongo')({session: session});
 var sessionStore = new MongoStore({
-    db: db
+    db: db.db
 });
 
 var publicDir;
@@ -51,12 +51,14 @@ app.get('*', function (req, res) {
     res.sendfile(join(publicDir, 'index.html'));
 });
 
-var port = process.env.PORT || 8000;
-var oldUmask = process.umask(0);
-if (fs.existsSync(port)) {
-    fs.unlinkSync(port);
-}
-server.listen(port, function () {
-    console.log('Server listening on port ' + port);
-    process.umask(oldUmask);
+db.promise.then(function () {
+    var port = process.env.PORT || 8000;
+    var oldUmask = process.umask(0);
+    if (fs.existsSync(port)) {
+        fs.unlinkSync(port);
+    }
+    server.listen(port, function () {
+        console.log('Server listening on port ' + port);
+        process.umask(oldUmask);
+    });
 });
