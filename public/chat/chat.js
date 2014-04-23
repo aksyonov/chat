@@ -87,4 +87,17 @@ angular.module('chatApp.chat', [
             restrict: 'E',
             templateUrl: 'chat/rooms.html'
         };
+    })
+
+    .filter('urlify', function() {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return function (input) {
+            return input.replace(urlRegex, function(url) {
+                if (/\.(jpg|png|gif)$/.test(url)) {
+                    return '<img class="img-responsive" src="' + url + '"/>';
+                } else {
+                    return '<a href="' + url + '">' + url + '</a>';
+                }
+            })
+        };
     });

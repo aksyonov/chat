@@ -1,9 +1,9 @@
 <div class="col-xs-9" scroll-glue>
     <ul class="list-group">
         <li class="list-group-item" ng-repeat="msg in chat.messages" bindonce>
-            <span class="label label-default" bo-bind="msg.date | date:'HH:mm'"></span>
-            <span class="label label-info" bo-bind="msg.user"></span>
-            <span bo-html="msg.text | emoji"></span>
+            <span class="label label-default" bo-text="msg.date | date:'HH:mm'"></span>
+            <span class="label label-info" bo-text="msg.user"></span>
+            <span bo-html="msg.text | urlify | emoji"></span>
         </li>
     </ul>
 </div>
