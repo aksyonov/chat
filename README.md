@@ -3,6 +3,8 @@ chat
 
 My chat made with node.js, MongoDB, socket.io and AngularJS.
 
+[![Build Status](https://travis-ci.org/aksyonov/chat.svg?branch=master)](https://travis-ci.org/aksyonov/chat)
+
 Run the project
 ---------------
 
