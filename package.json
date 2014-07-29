@@ -8,7 +8,8 @@
   "license": "BSD",
   "readmeFilename": "README.md",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "gulp"
   },
   "dependencies": {
     "express": "*",
