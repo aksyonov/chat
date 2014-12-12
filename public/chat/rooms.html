@@ -7,9 +7,9 @@
         <li ng-repeat="room in chat.rooms" bindonce
             ng-class="{active: room.name==chat.currentRoom}">
             <a href="#" ng-click="room.name!=chat.currentRoom && changeRoom(room.name)">
-                <span bo-bind="room.name"></span>
+                <span ng-bind="::room.name"></span>
                 <span class="badge pull-right">{{ room.online }}</span>
-                <span class="badge pull-right" bo-if="room.pass">
+                <span class="badge pull-right" ng-if="::room.pass">
                     <span class="glyphicon glyphicon-lock"></span>
                 </span>
             </a>

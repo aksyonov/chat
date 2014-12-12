@@ -6,7 +6,7 @@ angular.module('chatApp.chat.createRoomModal', [
         var defaults = {
             animation: 'am-fade-and-slide-top',
             backdropAnimation: 'am-fade',
-            template: 'chat/create-room-modal.html',
+            template: '/chat/create-room-modal.html',
             container: 'body'
         };
         return {

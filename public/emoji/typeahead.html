@@ -1,9 +1,9 @@
 <ul tabindex="-1" class="typeahead dropdown-menu" ng-show="$isVisible()" role="select">
-    <li role="presentation" ng-repeat="match in $matches" bindonce
-        bo-class="{active: $index == $activeIndex}">
+    <li role="presentation" ng-repeat="match in $matches"
+        ng-class="::{active: $index == $activeIndex}">
         <a role="menuitem" tabindex="-1" ng-click="$select($index, $event)">
-            <i class="emoji" bo-class="'emoji_' + match.value"></i>
-            <span bo-bind="match.label"></span>
+            <i class="emoji" ng-class="::'emoji_' + match.value"></i>
+            <span ng-bind="::match.label"></span>
         </a>
     </li>
 </ul>

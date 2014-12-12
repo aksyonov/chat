@@ -45,7 +45,6 @@ var server = http.createServer(app);
 var io = require('./lib/socket')(server, cookieParser, sessionStore);
 
 require('./lib/auth')(app);
-require('./lib/chat')(app, io);
 
 app.get('*', function (req, res) {
     res.sendfile(join(publicDir, 'index.html'));

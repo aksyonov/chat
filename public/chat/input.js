@@ -6,7 +6,7 @@ angular.module('chatApp.chat.input', [
     .directive('chatInput', function(socket) {
         return {
             restrict: 'E',
-            templateUrl: 'chat/input.html',
+            templateUrl: '/chat/input.html',
             replace: true,
             link: function (scope, element, attr) {
                 scope.message = '';

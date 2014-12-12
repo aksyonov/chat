@@ -77,7 +77,7 @@ angular.module('chatApp.chat', [
         return {
             replace: true,
             restrict: 'E',
-            templateUrl: 'chat/messages.html'
+            templateUrl: '/chat/messages.html'
         };
     })
 
@@ -85,7 +85,7 @@ angular.module('chatApp.chat', [
         return {
             replace: true,
             restrict: 'E',
-            templateUrl: 'chat/rooms.html'
+            templateUrl: '/chat/rooms.html'
         };
     })
 

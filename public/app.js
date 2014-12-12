@@ -1,7 +1,6 @@
 angular.module('chatApp', [
         'ngRoute',
         'ngAnimate',
-        'pasvaz.bindonce',
         'chatApp.socket',
         'chatApp.chat'
     ])
@@ -11,11 +10,11 @@ angular.module('chatApp', [
         $routeProvider
             .when('/', {
                 controller: 'ChatCtrl',
-                templateUrl: 'chat/chat.html'
+                templateUrl: '/chat/chat.html'
             })
             .when('/login', {
                 controller: 'LoginCtrl',
-                templateUrl: 'templates/login.html'
+                templateUrl: '/templates/login.html'
             })
             .when('/logout', {
                 controller: 'LogoutCtrl',
@@ -42,7 +41,7 @@ angular.module('chatApp', [
                 password: $scope.pass
             }).then(function (res) {
                 if (res.data === 'ok') {
-                    socket.socket.connect();
+                    socket.connect();
                 } else {
                     $scope.err = res.data;
                 }
@@ -57,3 +56,7 @@ angular.module('chatApp', [
             $rootScope.loggedIn = false;
         });
     })
+
+    .filter('unsafe', function($sce) {
+        return $sce.trustAsHtml;
+    });
